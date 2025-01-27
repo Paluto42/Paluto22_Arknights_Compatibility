@@ -12,11 +12,10 @@ using System.Linq;
 namespace Paluto22.AK.Patch
 {
     [StaticConstructorOnStartup]
-    public static class Paluto22_AKPatches
+    public static class AKPatches
     {
-        private static readonly Type patchType = typeof(Paluto22_AKPatches);
-        public static Type FAHarmonyPatches = null;
-        static Paluto22_AKPatches()
+        private static readonly Type patchType = typeof(AKPatches);
+        static AKPatches()
         {
             Harmony harmony = new Harmony("paluto22.ak.compatibility");
             harmony.Patch(AccessTools.Method(typeof(PawnGenerator), nameof(PawnGenerator.GeneratePawn), new[] { typeof(PawnGenerationRequest) }),
@@ -28,13 +27,12 @@ namespace Paluto22.AK.Patch
             if (ModLister.GetActiveModWithIdentifier("Nals.FacialAnimation") != null)
             {
                 Assembly FacialAnimation = Type.GetType("FacialAnimation.FacialAnimationMod, FacialAnimation")?.Assembly;
-                Type type = FacialAnimation?.GetTypes().FirstOrDefault(t => t.Name == "HarmonyPatches");
-                FAHarmonyPatches = type;
+                Type HarmonyPatches = FacialAnimation?.GetTypes().FirstOrDefault(t => t.Name == "HarmonyPatches");
 
-                MethodBase method = type?.GetMethod("PrefixRenderPawnInternal");
+                MethodBase method = HarmonyPatches?.GetMethod("PrefixRenderPawnInternal");
                 if (method != null)
                 {
-                    harmony.Patch(method, transpiler: new HarmonyMethod(patchType, nameof(Transpiler_RenderPawn)));
+                    harmony.Patch(method, transpiler: new HarmonyMethod(patchType, nameof(Transpiler_RenderPawn), new[] { HarmonyPatches }));
                     Log.Message("[Arknights-FacialAnimation Compability] Initialized");
                 }
             }
@@ -69,11 +67,12 @@ namespace Paluto22.AK.Patch
                 request.KindDef = PawnKindDefOf.Colonist;
             }
         }
-        public static IEnumerable<CodeInstruction> Transpiler_RenderPawn(IEnumerable<CodeInstruction> instructions, ILGenerator il)
+        public static IEnumerable<CodeInstruction> Transpiler_RenderPawn(IEnumerable<CodeInstruction> instructions, ILGenerator il, Type HarmonyPatches)
         {
             List<CodeInstruction> codes = instructions.ToList();
+            //IL_0007: stsfld
             int index = codes.FindIndex(code => code.opcode == OpCodes.Stsfld) + 1;
-
+            //IL_000c: ldc.i4.0
             Label IL_000c = il.DefineLabel();
             codes[index].labels.Add(IL_000c);
             MethodInfo methodInfo = patchType.GetMethod(nameof(GetDocMethod));
@@ -84,7 +83,7 @@ namespace Paluto22.AK.Patch
                 new CodeInstruction(OpCodes.Call, methodInfo),
                 new CodeInstruction(OpCodes.Brfalse_S, IL_000c),
                 new CodeInstruction(OpCodes.Ldnull),
-                new CodeInstruction(OpCodes.Stsfld, FAHarmonyPatches.GetField("comp",BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance)),
+                new CodeInstruction(OpCodes.Stsfld, HarmonyPatches.GetField("comp",BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance)),
             });
             return codes;
         }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Arknights Compability")]
+[assembly: AssemblyTitle("AlienRace Compatibility")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Paluto22")]
-[assembly: AssemblyProduct("Arknights Compability")]
+[assembly: AssemblyProduct("AlienRace Compatibility")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("4355db7b-c1d4-4a37-ae31-d4582b0d612c")]
+[assembly: Guid("df765a5a-9a0e-4423-b3f9-6150a2ff0c24")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

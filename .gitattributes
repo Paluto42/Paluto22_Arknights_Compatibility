@@ -1,2 +1,10 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+.vs/
+AB
+Dlls
+Logs
+obj
+Packages
+Library
+Instance/
+ProjectSettings/
+Temp/
