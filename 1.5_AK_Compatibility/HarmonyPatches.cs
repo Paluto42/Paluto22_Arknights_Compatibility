@@ -110,11 +110,9 @@ namespace Paluto22.AK.Patch
             if (AKC_ModSettings.disable_FacialAnimation) return;
             if (___pawn.GetDoc() != null)
             {
-                string name = ___pawn.GetDoc().operatorDef.defName;
-                bool is_AK = name.StartsWith("AK");
-                bool is_BA = name.StartsWith("BA");
-                if (!is_AK && !is_BA) return;
-                if (AKC_ModSettings.MIS_NoFace_Actived && is_AK && !AKC_ModSettings.disable_FacialAnimation_NoFace)
+                OperatorDocument doc = ___pawn.GetDoc();
+                if (doc != null) return;
+                if (AKC_ModSettings.MIS_NoFace_Actived && !AKC_ModSettings.disable_FacialAnimation_NoFace)
                 {
                     return;
                 }
