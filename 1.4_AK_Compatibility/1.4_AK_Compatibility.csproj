@@ -70,9 +70,8 @@
   <ItemGroup>
     <Content Include="ModData\About\About.xml" />
     <Content Include="ModData\About\Preview.png" />
+    <Content Include="ModData\Patches\HeadType.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ModData\Patches\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
