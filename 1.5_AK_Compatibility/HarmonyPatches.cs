@@ -142,7 +142,7 @@ namespace Paluto22.AK.Patch
         public static void NewGeneratePawn_Prefix(ref PawnGenerationRequest request)
         {
             if (OperatorDef.currentlyGenerating == false && !ModsConfig.IsActive("erdelf.HumanoidAlienRaces")) return;
-            if (Current.ProgramState == ProgramState.Playing && OperatorDef.currentlyGenerating && !AKC_ModSettings.disable_PawnKindDef)
+            if (/*Current.ProgramState == ProgramState.Playing || */!AKC_ModSettings.disable_PawnKindDef)
             {
                 request.KindDef = PawnKindDefOf.Colonist;
             }
